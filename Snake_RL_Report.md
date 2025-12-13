@@ -37,7 +37,11 @@ All experiments were run for 500 episodes.
 ## Results
 
 ### Training Curves
-*(Insert generated training curve figures here)*
+![alt text](figures/summary_bar_chart.png)
+![alt text](figures/wall_impact_baseline.png)
+![alt text](figures/stability_analysis_architectures.png)
+![alt text](figures/stability_analysis_memory.png)
+
 
 ### Summary of Performance
 
@@ -90,14 +94,22 @@ The deployment of reinforcement learning and generative AI in industry carries s
 ## Conclusion
 
 This study demonstrated the impact of hyperparameters on RL agent performance. 
-Key findings:
-1.  [Finding 1]
-2.  [Finding 2]
 
-Future improvements could include Prioritized Experience Replay to focus on "hard" examples (like wall collisions) or Dueling DQNs to separate state value from action advantage.
+Key findings:
+
+1. **Network depth without architectural safeguards causes learning failure.** Deep networks (4 and 6 hidden layers) achieved near-zero performance (0.01 and 0.00 average scores) due to vanishing gradient problems, while the shallow baseline and wide networks learned effectively. This validates that simply adding layers does not improve DQN performance without techniques like batch normalisation or residual connections.
+
+2. **Larger replay buffers improve performance in standard environments.** The 500K memory configuration achieved the highest average score (34.27) and record (77), outperforming both the baseline (32.19) and small memory (33.17). Greater sample diversity helps break temporal correlations and stabilise learning.
+
+3. **Network width provides robustness to environmental complexity.** When wall obstacles were introduced, the wide network (4.71 average) outperformed all other configurations, showing 46% improvement over the wall baseline (3.23). Increased single-layer capacity aids adaptation to complex spatial features.
+
+4. **Environmental changes drastically impact agent performance.** The wall obstacle reduced baseline performance by 90% (32.19 to 3.23), highlighting the brittleness of RL agents to distributional shift—a critical concern for real-world deployment.
+
+The Snake environment also revealed fundamental RL limitations: sparse reward structures provide limited credit assignment guidance, and epsilon-greedy exploration is relatively crude. Future improvements could include Prioritized Experience Replay (Schaul et al., 2015) to focus on important transitions like wall collisions, Dueling DQN architectures to separate state-value from action-advantage estimation, and Double DQN to reduce Q-value overestimation bias that contributes to learning instability.
 
 ## References
 
 1.  Mnih, V., et al. (2015). "Human-level control through deep reinforcement learning." *Nature*.
-2.  Sutton, R. S., & Barto, A. G. (2018). *Reinforcement Learning: An Introduction*. MIT Grid.
-3.  PyTorch Documentation. https://pytorch.org/
+2.  Sutton, R. S., & Barto, A. G. (2018). *Reinforcement Learning: An Introduction*. MIT Press.
+3.  Schaul, T., et al. (2015). "Prioritized Experience Replay." *ICLR*.
+4.  PyTorch Documentation. https://pytorch.org/
