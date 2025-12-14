@@ -161,10 +161,27 @@ python visualizations.py
 
 ```
 
+## Troubleshooting
+
+### "ModuleNotFoundError: No module named 'torch'"
+```bash
+pip install torch
+```
+
+### "Permission denied" error
+```bash
+chmod +x experiment_driver.py
+```
+
+### Experiments running slowly
+- Ensure you're using the headless version (no pygame display)
+- Close other applications to free CPU/memory
+- On Intel Macs, expect 20-30% longer run times
+
 ## Notes
 - The headless game version runs without pygame display for ~10x faster training
 - Each experiment with 500 episodes takes approximately 2-5 minutes depending on configuration
-- Full suite (11 experiments) takes approximately 30-60 minutes
+- Full suite (12 experiments) takes approximately 40-50 minutes
 - Results are saved incrementally - can resume if interrupted
 
 ## Academic References
